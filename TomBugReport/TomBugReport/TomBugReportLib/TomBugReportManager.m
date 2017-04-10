@@ -9,6 +9,9 @@
 #import "TomBugReportManager.h"
 #import "TomReportRootViewController.h"
 
+#import "TomCreashSignalHandler.h"
+#import "TomUncaughtExceptionHandler.h"
+
 @interface TomBugReportManager()
 {
 
@@ -41,6 +44,8 @@
     self = [super init];
     if (self) {
         [self initReportWindow];
+        TomInstallSignalHandler();
+        TomInstallUncaughtExceptionHandler();
     }
     return self;
 }
