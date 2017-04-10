@@ -1,5 +1,5 @@
 //
-//  TomCreashSignalHandler.h
+//  TomCrashSignalHandler.h
 //  TomCrashLogLib
 //
 //  Created by Liuyujie on 2017/2/12.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TomCreashSignalHandler : NSObject
+@interface TomCrashSignalHandler : NSObject
 
 @end
 

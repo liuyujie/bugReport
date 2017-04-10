@@ -13,7 +13,7 @@
 
 + (void)SaveExceptionCreash:(NSString *)exceptionInfo
 {
-    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"OCExceptionCrash"];
+    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"TomExceptionCrash"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:logPath]){
         [[NSFileManager defaultManager] createDirectoryAtPath:logPath withIntermediateDirectories:YES attributes:nil error:nil];
     }

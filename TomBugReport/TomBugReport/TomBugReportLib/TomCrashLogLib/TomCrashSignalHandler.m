@@ -1,22 +1,22 @@
 //
-//  TomCreashSignalHandler.m
+//  TomCrashSignalHandler.m
 //  TomCrashLogLib
 //
 //  Created by Liuyujie on 2017/2/12.
 //  Copyright © 2017年 Tom. All rights reserved.
 //
 
-#import "TomCreashSignalHandler.h"
+#import "TomCrashSignalHandler.h"
 #include <libkern/OSAtomic.h>
 #include <execinfo.h>
 #import <UIKit/UIKit.h>
 #import "TomUncaughtExceptionHandler.h"
 
-@interface TomCreashSignalHandler()<UIAlertViewDelegate>
+@interface TomCrashSignalHandler()<UIAlertViewDelegate>
 
 @end
 
-@implementation TomCreashSignalHandler
+@implementation TomCrashSignalHandler
 
 + (void)SaveSignalCreash:(NSString *)exceptionInfo
 {
@@ -44,7 +44,7 @@ void TomSignalExceptionHandler(int signal)
     for (i = 0; i <frames; ++i) {
         [creashString appendFormat:@"%s\n", strs[i]];
     }
-    [TomCreashSignalHandler SaveSignalCreash:creashString];
+    [TomCrashSignalHandler SaveSignalCreash:creashString];
 }
 
 void TomInstallSignalHandler(void)

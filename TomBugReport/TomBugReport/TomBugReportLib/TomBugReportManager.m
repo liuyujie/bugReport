@@ -9,7 +9,7 @@
 #import "TomBugReportManager.h"
 #import "TomReportRootViewController.h"
 
-#import "TomCreashSignalHandler.h"
+#import "TomCrashSignalHandler.h"
 #import "TomUncaughtExceptionHandler.h"
 
 @interface TomBugReportManager()

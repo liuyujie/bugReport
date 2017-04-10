@@ -20,7 +20,7 @@
 		271E174B1E70619D00299116 /* TomReportRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271E17481E70619D00299116 /* TomReportRootViewController.m */; };
 		271E174D1E7061E400299116 /* tom_btn_send_bug_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 271E174C1E7061E400299116 /* tom_btn_send_bug_n@2x.png */; };
 		2746A3DC1E9BCBEF00115875 /* TomEditImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3DB1E9BCBEF00115875 /* TomEditImageViewController.m */; };
-		2746A3E21E9BE21700115875 /* TomCreashSignalHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3DF1E9BE21700115875 /* TomCreashSignalHandler.m */; };
+		2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3DF1E9BE21700115875 /* TomCrashSignalHandler.m */; };
 		2746A3E31E9BE21700115875 /* TomUncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */; };
 /* End PBXBuildFile section */
 
@@ -67,8 +67,8 @@
 		271E174C1E7061E400299116 /* tom_btn_send_bug_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tom_btn_send_bug_n@2x.png"; sourceTree = "<group>"; };
 		2746A3DA1E9BCBEF00115875 /* TomEditImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomEditImageViewController.h; sourceTree = "<group>"; };
 		2746A3DB1E9BCBEF00115875 /* TomEditImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomEditImageViewController.m; sourceTree = "<group>"; };
-		2746A3DE1E9BE21700115875 /* TomCreashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomCreashSignalHandler.h; sourceTree = "<group>"; };
-		2746A3DF1E9BE21700115875 /* TomCreashSignalHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomCreashSignalHandler.m; sourceTree = "<group>"; };
+		2746A3DE1E9BE21700115875 /* TomCrashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomCrashSignalHandler.h; sourceTree = "<group>"; };
+		2746A3DF1E9BE21700115875 /* TomCrashSignalHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomCrashSignalHandler.m; sourceTree = "<group>"; };
 		2746A3E01E9BE21700115875 /* TomUncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomUncaughtExceptionHandler.h; sourceTree = "<group>"; };
 		2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomUncaughtExceptionHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -181,8 +181,8 @@
 		2746A3DD1E9BE21700115875 /* TomCrashLogLib */ = {
 			isa = PBXGroup;
 			children = (
-				2746A3DE1E9BE21700115875 /* TomCreashSignalHandler.h */,
-				2746A3DF1E9BE21700115875 /* TomCreashSignalHandler.m */,
+				2746A3DE1E9BE21700115875 /* TomCrashSignalHandler.h */,
+				2746A3DF1E9BE21700115875 /* TomCrashSignalHandler.m */,
 				2746A3E01E9BE21700115875 /* TomUncaughtExceptionHandler.h */,
 				2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */,
 			);
@@ -331,7 +331,7 @@
 				271E17491E70619D00299116 /* TomBugReportManager.m in Sources */,
 				271E17141E70616300299116 /* AppDelegate.m in Sources */,
 				271E17111E70616300299116 /* main.m in Sources */,
-				2746A3E21E9BE21700115875 /* TomCreashSignalHandler.m in Sources */,
+				2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */,
 				271E174B1E70619D00299116 /* TomReportRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
