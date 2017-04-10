@@ -1,6 +1,6 @@
 //
-//  TomClientInfoUtil.m
-//  Demo
+//  TomDeviceInfoUtil.m
+//  TomBugReportLib
 //
 //  Created by Liuyujie on 2017/3/8.
 //  Copyright © 2017年 Tom. All rights reserved.

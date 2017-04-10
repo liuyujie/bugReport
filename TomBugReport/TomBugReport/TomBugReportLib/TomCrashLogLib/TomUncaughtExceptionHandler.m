@@ -1,9 +1,9 @@
 //
-//  UncaughtExceptionHandler.m
-//  UncaughtExceptionDemo
+//  TomUncaughtExceptionHandler.m
+//  TomCrashLogLib
 //
-//  Created by  tomxiang on 15/8/28.
-//  Copyright (c) 2015年  tomxiang. All rights reserved.
+//  Created by Liuyujie on 2017/2/13.
+//  Copyright © 2017年 Tom. All rights reserved.
 //
 
 #import "TomUncaughtExceptionHandler.h"

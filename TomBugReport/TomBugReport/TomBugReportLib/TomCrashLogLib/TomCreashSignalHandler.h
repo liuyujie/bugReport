@@ -1,9 +1,9 @@
 //
-//  SignalHandler.h
-//  UncaughtExceptionDemo
+//  TomCreashSignalHandler.h
+//  TomCrashLogLib
 //
-//  Created by  tomxiang on 15/8/29.
-//  Copyright (c) 2015年  tomxiang. All rights reserved.
+//  Created by Liuyujie on 2017/2/12.
+//  Copyright © 2017年 Tom. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

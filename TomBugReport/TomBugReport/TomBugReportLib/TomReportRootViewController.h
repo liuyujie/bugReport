@@ -1,6 +1,6 @@
 //
 //  TomReportRootViewController.h
-//  Demo
+//  TomBugReportLib
 //
 //  Created by Liuyujie on 2017/1/21.
 //  Copyright © 2017年 Tom. All rights reserved.
