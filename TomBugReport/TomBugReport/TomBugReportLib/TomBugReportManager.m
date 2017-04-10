@@ -77,10 +77,14 @@
         self.bugReportWindow.frame = mainScreenRect;
         self.bugReportWindow.windowLevel = UIWindowLevelNormal + 10.0;
         UIImage *image = [TomBugReportManager snapsHotView:keyWindow];
+        
         TomReportRootViewController *rootVC = [[TomReportRootViewController alloc] init];
         rootVC.image = image;
         rootVC.windowInfoString = [self getWindowInfo:keyWindow];
-        [self.bugReportWindow setRootViewController:rootVC];
+        
+        UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:rootVC];
+        [rootNav setNavigationBarHidden:YES];
+        [self.bugReportWindow setRootViewController:rootNav];
         self.bugReportWindow.backgroundColor = [UIColor whiteColor];
         [self.bugReportWindow becomeKeyWindow];
     }

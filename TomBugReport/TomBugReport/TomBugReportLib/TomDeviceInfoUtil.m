@@ -6,11 +6,11 @@
 //  Copyright © 2017年 Tom. All rights reserved.
 //
 
-#import "TomClientInfoUtil.h"
+#import "TomDeviceInfoUtil.h"
 #import "sys/utsname.h"
 #import <UIKit/UIKit.h>
 
-@implementation TomClientInfoUtil
+@implementation TomDeviceInfoUtil
 
 + (NSString *)getDeviceName
 {

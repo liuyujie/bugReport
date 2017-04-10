@@ -7,8 +7,9 @@
 //
 
 #import "TomReportRootViewController.h"
+#import "TomEditImageViewController.h"
 #import "TomBugReportManager.h"
-#import "TomClientInfoUtil.h"
+#import "TomDeviceInfoUtil.h"
 
 @interface TomReportRootViewController ()<UIAlertViewDelegate>
 {
@@ -36,11 +37,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)imageViewTaped:(UITapGestureRecognizer *)tapGesture
+{
+    TomEditImageViewController *editImageVC = [[TomEditImageViewController alloc] init];
+    [self.navigationController pushViewController:editImageVC animated:YES];
+}
+
 - (NSString *)getDesText
 {
     NSMutableString *text = [[NSMutableString alloc] initWithString:self.windowInfoString];
-    [text appendString:[TomClientInfoUtil getSystemNameAndVersion]];
-    [text appendString:[TomClientInfoUtil getDeviceName]];
+    [text appendString:[TomDeviceInfoUtil getSystemNameAndVersion]];
+    [text appendString:[TomDeviceInfoUtil getDeviceName]];
     return text;
 }
 
@@ -91,6 +98,10 @@
     imageView.layer.borderWidth = 2;
     imageView.layer.borderColor = [UIColor orangeColor].CGColor;
     imageView.image = image;
+    imageView.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTaped:)];
+    [imageView addGestureRecognizer:tapGesture];
     
     [self.view addSubview:imageView];
 }

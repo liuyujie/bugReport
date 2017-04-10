@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TomClientInfoUtil : NSObject
+@interface TomDeviceInfoUtil : NSObject
 
 + (NSString *)getDeviceName;
 
