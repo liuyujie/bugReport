@@ -11,6 +11,7 @@
 @interface TomReportRootViewController : UIViewController
 
 @property (nonatomic,strong)UIImage *image;
-@property (nonatomic,copy)NSString *windowInfoString;
+
+@property (nonatomic,copy)NSString *topViewControllerInfoString;
 
 @end

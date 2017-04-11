@@ -19,7 +19,6 @@
 
 @property (nonatomic, strong) UIWindow *bugReportWindow;
 
-
 @end
 
 @implementation TomBugReportManager
@@ -59,25 +58,25 @@
     self.bugReportWindow.frame = CGRectMake(windowLeft, 0, 40, 40);
     self.bugReportWindow.backgroundColor = [UIColor clearColor];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 40, 40);
-    [btn setImage:[UIImage imageNamed:@"tom_btn_send_bug_n"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(reportBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bugReportWindow addSubview:btn];
+    UIButton *reportBugBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    reportBugBtn.frame = CGRectMake(0, 0, 40, 40);
+    [reportBugBtn setImage:[UIImage imageNamed:@"tom_btn_send_bug_n"] forState:UIControlStateNormal];
+    [reportBugBtn addTarget:self action:@selector(reportBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bugReportWindow addSubview:reportBugBtn];
     self.bugReportWindow.hidden = NO;
 }
 
 - (void)reportBtnClicked:(UIButton *)sender
 {
     CGRect mainScreenRect = [UIScreen mainScreen].bounds;
-    if (self.bugReportWindow.frame.size.height == mainScreenRect.size.height) {
+    if (CGRectEqualToRect(mainScreenRect,self.bugReportWindow.bounds)) {
         CGFloat windowLeft = [UIApplication sharedApplication].statusBarFrame.size.width - 100;
         self.bugReportWindow.windowLevel = UIWindowLevelStatusBar + 10.0;
         self.bugReportWindow.rootViewController = nil;
         self.bugReportWindow.frame = CGRectMake(windowLeft, 0, 40, 40);
         self.bugReportWindow.backgroundColor = [UIColor clearColor];
         [self.bugReportWindow resignKeyWindow];
-    }else{
+    } else {
         UIWindow *keyWindow = [UIApplication sharedApplication].delegate.window;
         self.bugReportWindow.frame = mainScreenRect;
         self.bugReportWindow.windowLevel = UIWindowLevelNormal + 10.0;
@@ -85,19 +84,23 @@
         
         TomReportRootViewController *rootVC = [[TomReportRootViewController alloc] init];
         rootVC.image = image;
+<<<<<<< HEAD
         rootVC.windowInfoString = [self getWindowInfo:keyWindow];
         
         UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:rootVC];
         [rootNav setNavigationBarHidden:YES];
         [self.bugReportWindow setRootViewController:rootNav];
+=======
+        rootVC.topViewControllerInfoString = [self getTopViewControllerInfo:keyWindow];
+        [self.bugReportWindow setRootViewController:rootVC];
+>>>>>>> 777b59e22fc64964651743ef387a1d5125bc6302
         self.bugReportWindow.backgroundColor = [UIColor whiteColor];
         [self.bugReportWindow becomeKeyWindow];
     }
 }
 
-- (NSString *)getWindowInfo:(UIWindow *)keyWindow
+- (NSString *)getTopViewControllerInfo:(UIWindow *)keyWindow
 {
- 
     NSString *rootVCName = NSStringFromClass(keyWindow.rootViewController.class);
     
     UIViewController *currentVC = [self getVisibleViewController:keyWindow];
@@ -123,31 +126,34 @@
 - (UIViewController *)getVisibleViewController:(UIWindow *)keyWindow
 {
     UIViewController *rootViewController = [keyWindow rootViewController];
-    return [self getVisibleViewControllerFrom:rootViewController];
+    return [self getTopVisibleViewControllerFrom:rootViewController];
 }
 
-- (UIViewController *)getVisibleViewControllerFrom:(UIViewController *)vc
+- (UIViewController *)getTopVisibleViewControllerFrom:(UIViewController *)vc
 {
     if ([vc isKindOfClass:[UINavigationController class]]) {
-        return [self getVisibleViewControllerFrom:[((UINavigationController *) vc) visibleViewController]];
+        return [self getTopVisibleViewControllerFrom:[((UINavigationController *)vc) visibleViewController]];
     } else if ([vc isKindOfClass:[UITabBarController class]]) {
-        return [self getVisibleViewControllerFrom:[((UITabBarController *) vc) selectedViewController]];
+        return [self getTopVisibleViewControllerFrom:[((UITabBarController *)vc) selectedViewController]];
     } else {
         if (vc.presentedViewController) {
-            return [self getVisibleViewControllerFrom:vc.presentedViewController];
+            return [self getTopVisibleViewControllerFrom:vc.presentedViewController];
         } else {
             return vc;
         }
     }
-//    - (UINavigationController *)visibleNavigationController
-//    {
-//        return [[self visibleViewController] navigationController];
-//    }
 }
 
-
-
 #pragma mark - 屏幕快照
+
++ (UIImage *)snapsHotView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size,YES,[UIScreen mainScreen].scale);
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 + (UIImage *)convertViewToImage:(UIView *)view
 {
@@ -160,13 +166,5 @@
     return image;
 }
 
-+ (UIImage *)snapsHotView:(UIView *)view
-{
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size,YES,[UIScreen mainScreen].scale);
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
 
 @end
