@@ -38,7 +38,7 @@
 
 - (NSString *)getDesText
 {
-    NSMutableString *text = [[NSMutableString alloc] initWithString:self.windowInfoString];
+    NSMutableString *text = [[NSMutableString alloc] initWithString:self.topViewControllerInfoString];
     [text appendString:[TomClientInfoUtil getSystemNameAndVersion]];
     [text appendString:[TomClientInfoUtil getDeviceName]];
     return text;
@@ -80,7 +80,6 @@
     [self onCloseBtnClicked:nil];
 }
 
-
 #pragma mark - init View
 
 - (void)initImageView:(UIImage *)image
@@ -104,7 +103,6 @@
     desLabel.text = text;
     [self.view addSubview:desLabel];
 }
-
 
 - (void)initBottomView
 {
