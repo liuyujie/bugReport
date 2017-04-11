@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TomBugReportManager.h"
-
+#import "DBURLProtocol.h"
 @interface AppDelegate ()
 
 @end
@@ -20,6 +20,8 @@
     // Override point for customization after application launch.
     dispatch_async(dispatch_get_main_queue(), ^{
         [TomBugReportManager sharedInstance];
+        
+        [NSURLProtocol registerClass:[DBURLProtocol class]];
     });
     return YES;
 }

@@ -84,16 +84,10 @@
         
         TomReportRootViewController *rootVC = [[TomReportRootViewController alloc] init];
         rootVC.image = image;
-<<<<<<< HEAD
-        rootVC.windowInfoString = [self getWindowInfo:keyWindow];
-        
+        rootVC.topViewControllerInfoString = [self getTopViewControllerInfo:keyWindow];
         UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:rootVC];
         [rootNav setNavigationBarHidden:YES];
         [self.bugReportWindow setRootViewController:rootNav];
-=======
-        rootVC.topViewControllerInfoString = [self getTopViewControllerInfo:keyWindow];
-        [self.bugReportWindow setRootViewController:rootVC];
->>>>>>> 777b59e22fc64964651743ef387a1d5125bc6302
         self.bugReportWindow.backgroundColor = [UIColor whiteColor];
         [self.bugReportWindow becomeKeyWindow];
     }

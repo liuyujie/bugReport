@@ -45,15 +45,9 @@
 
 - (NSString *)getDesText
 {
-<<<<<<< HEAD
-    NSMutableString *text = [[NSMutableString alloc] initWithString:self.windowInfoString];
+    NSMutableString *text = [[NSMutableString alloc] initWithString:self.topViewControllerInfoString];
     [text appendString:[TomDeviceInfoUtil getSystemNameAndVersion]];
     [text appendString:[TomDeviceInfoUtil getDeviceName]];
-=======
-    NSMutableString *text = [[NSMutableString alloc] initWithString:self.topViewControllerInfoString];
-    [text appendString:[TomClientInfoUtil getSystemNameAndVersion]];
-    [text appendString:[TomClientInfoUtil getDeviceName]];
->>>>>>> 777b59e22fc64964651743ef387a1d5125bc6302
     return text;
 }
 

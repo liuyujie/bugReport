@@ -22,6 +22,10 @@
 		2746A3DC1E9BCBEF00115875 /* TomEditImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3DB1E9BCBEF00115875 /* TomEditImageViewController.m */; };
 		2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3DF1E9BE21700115875 /* TomCrashSignalHandler.m */; };
 		2746A3E31E9BE21700115875 /* TomUncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */; };
+		2746A3EB1E9D111B00115875 /* DBRequestOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3E61E9D111B00115875 /* DBRequestOutcome.m */; };
+		2746A3EC1E9D111B00115875 /* DBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3E81E9D111B00115875 /* DBURLProtocol.m */; };
+		2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */; };
+		2746A3F01E9D115400115875 /* NSObject+DBDebugToolkit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +75,14 @@
 		2746A3DF1E9BE21700115875 /* TomCrashSignalHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomCrashSignalHandler.m; sourceTree = "<group>"; };
 		2746A3E01E9BE21700115875 /* TomUncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomUncaughtExceptionHandler.h; sourceTree = "<group>"; };
 		2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomUncaughtExceptionHandler.m; sourceTree = "<group>"; };
+		2746A3E51E9D111B00115875 /* DBRequestOutcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRequestOutcome.h; sourceTree = "<group>"; };
+		2746A3E61E9D111B00115875 /* DBRequestOutcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRequestOutcome.m; sourceTree = "<group>"; };
+		2746A3E71E9D111B00115875 /* DBURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBURLProtocol.h; sourceTree = "<group>"; };
+		2746A3E81E9D111B00115875 /* DBURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBURLProtocol.m; sourceTree = "<group>"; };
+		2746A3E91E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+DBURLProtocol.h"; sourceTree = "<group>"; };
+		2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+DBURLProtocol.m"; sourceTree = "<group>"; };
+		2746A3EE1E9D115400115875 /* NSObject+DBDebugToolkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DBDebugToolkit.h"; sourceTree = "<group>"; };
+		2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DBDebugToolkit.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +176,7 @@
 		271E17421E70619D00299116 /* TomBugReportLib */ = {
 			isa = PBXGroup;
 			children = (
+				2746A3E41E9D111B00115875 /* DBURLProtocol */,
 				2746A3DD1E9BE21700115875 /* TomCrashLogLib */,
 				271E174C1E7061E400299116 /* tom_btn_send_bug_n@2x.png */,
 				271E17431E70619D00299116 /* TomBugReportManager.h */,
@@ -187,6 +200,21 @@
 				2746A3E11E9BE21700115875 /* TomUncaughtExceptionHandler.m */,
 			);
 			path = TomCrashLogLib;
+			sourceTree = "<group>";
+		};
+		2746A3E41E9D111B00115875 /* DBURLProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				2746A3EE1E9D115400115875 /* NSObject+DBDebugToolkit.h */,
+				2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */,
+				2746A3E51E9D111B00115875 /* DBRequestOutcome.h */,
+				2746A3E61E9D111B00115875 /* DBRequestOutcome.m */,
+				2746A3E71E9D111B00115875 /* DBURLProtocol.h */,
+				2746A3E81E9D111B00115875 /* DBURLProtocol.m */,
+				2746A3E91E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.h */,
+				2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */,
+			);
+			path = DBURLProtocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,14 +352,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2746A3EC1E9D111B00115875 /* DBURLProtocol.m in Sources */,
 				271E174A1E70619D00299116 /* TomDeviceInfoUtil.m in Sources */,
 				2746A3DC1E9BCBEF00115875 /* TomEditImageViewController.m in Sources */,
+				2746A3F01E9D115400115875 /* NSObject+DBDebugToolkit.m in Sources */,
 				2746A3E31E9BE21700115875 /* TomUncaughtExceptionHandler.m in Sources */,
 				271E17171E70616300299116 /* ViewController.m in Sources */,
 				271E17491E70619D00299116 /* TomBugReportManager.m in Sources */,
 				271E17141E70616300299116 /* AppDelegate.m in Sources */,
 				271E17111E70616300299116 /* main.m in Sources */,
 				2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */,
+				2746A3EB1E9D111B00115875 /* DBRequestOutcome.m in Sources */,
+				2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */,
 				271E174B1E70619D00299116 /* TomReportRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
