@@ -26,6 +26,7 @@
 		2746A3EC1E9D111B00115875 /* DBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3E81E9D111B00115875 /* DBURLProtocol.m */; };
 		2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */; };
 		2746A3F01E9D115400115875 /* NSObject+DBDebugToolkit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */; };
+		2748849D1EAE314000863CF1 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+DBURLProtocol.m"; sourceTree = "<group>"; };
 		2746A3EE1E9D115400115875 /* NSObject+DBDebugToolkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DBDebugToolkit.h"; sourceTree = "<group>"; };
 		2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DBDebugToolkit.m"; sourceTree = "<group>"; };
+		2748849B1EAE314000863CF1 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +179,7 @@
 		271E17421E70619D00299116 /* TomBugReportLib */ = {
 			isa = PBXGroup;
 			children = (
+				2748849A1EAE314000863CF1 /* GCDAsyncSocket */,
 				2746A3E41E9D111B00115875 /* DBURLProtocol */,
 				2746A3DD1E9BE21700115875 /* TomCrashLogLib */,
 				271E174C1E7061E400299116 /* tom_btn_send_bug_n@2x.png */,
@@ -215,6 +219,15 @@
 				2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */,
 			);
 			path = DBURLProtocol;
+			sourceTree = "<group>";
+		};
+		2748849A1EAE314000863CF1 /* GCDAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				2748849B1EAE314000863CF1 /* GCDAsyncSocket.h */,
+				2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */,
+			);
+			path = GCDAsyncSocket;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,6 +377,7 @@
 				2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */,
 				2746A3EB1E9D111B00115875 /* DBRequestOutcome.m in Sources */,
 				2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */,
+				2748849D1EAE314000863CF1 /* GCDAsyncSocket.m in Sources */,
 				271E174B1E70619D00299116 /* TomReportRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
