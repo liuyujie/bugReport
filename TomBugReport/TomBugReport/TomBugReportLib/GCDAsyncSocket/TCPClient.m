@@ -9,6 +9,17 @@
 #import "TCPClient.h"
 #import "SocketClientManager.h"
 
+typedef NS_ENUM(NSUInteger, TcpSocketStatus) {
+    TcpSocketStatusNoInit = 0,
+    TcpSocketStatusConectioning,
+    TcpSocketStatusConectioned,
+    TcpSocketStatusDisConectioned,
+    TcpSocketStatusLogining,
+    TcpSocketStatusLoginFail,
+    TcpSocketStatusLoginSuccess,
+
+};
+
 @interface TCPClient () <SocketClientManagerDelegate>
 
 @property (strong, nonatomic) dispatch_queue_t APIQueue;
@@ -21,7 +32,7 @@
 @property (strong, nonatomic) NSTimer *heartTimer;              // 心跳 timer
 @property (assign, nonatomic) BOOL shouldHeart;                 // 是否要心跳
 @property (assign, nonatomic) BOOL netWorkStatus;               // 网络联通性
-@property (assign, nonatomic) BOOL isLogin;                 // 登录状态, 退出，被踢, socket断开，要设为 false
+@property (assign, nonatomic) TcpSocketStatus socketStatus;                 // 登录状态, 退出，被踢, socket断开，要设为 false
 @property (assign, nonatomic) BOOL autoLogin;                   // 自动登录，收到踢人包, 主动退出置为 false, 登录时 true
 
 @end
@@ -51,7 +62,7 @@ static TCPClient *instance = nil;
         self.buffer = [[NSMutableData alloc] init];
         [self.buffer setLength:0];
         self.netWorkStatus = YES;      // 首次运行认为有网络，因为 NetWorkManager 启动要时间，假如没网会超时返回
-        self.isLogin = NO;
+        self.socketStatus = TcpSocketStatusNoInit;
         self.autoLogin = YES;
         self.shouldHeart = YES;        // 默认开启心跳，应该要获取登录状态判断要不要心跳
         if (self.shouldHeart) {
@@ -91,40 +102,7 @@ static TCPClient *instance = nil;
 //    }
     
     // 如果不是登录包，不是心跳包, 并且没登录，可以自动登录，先自动登录，登录失败返回错误
-    if ((!self.isLogin || ![[SocketClientManager instance] status])
-        && self.autoLogin && rootMsg && rootMsg.type != TOMMessageTypeLogin) {
-        NSLog(@"------开始进入自动登录-----");
-        self.loginSem = dispatch_semaphore_create(0);
-        
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        NSString *name = [ud objectForKey:@"UserName"];
-        NSString *psw = [ud objectForKey:@"Password"];
-        if (name && psw) {
-            [[SocketClientManager instance] disConnect];      // 再次断开 socket，保证没登录
-            [self createLoginAndSend:name password:psw completion:^(id response, NSString *error) {
-                NSLog(@"自动登录返回");
-                self.isLogin = error == nil ? YES : NO;
-                self.autoLogin = self.isLogin;
-                
-                // 重登录不解析 response，都是一样的
-                dispatch_semaphore_signal(self.loginSem);
-            }];
-        } else {
-            self.isLogin = NO;
-            self.autoLogin = NO;
-            dispatch_semaphore_signal(self.loginSem);
-        }
-        // 等待重登录信号
-        NSLog(@"等待重登录信号");
-        dispatch_semaphore_wait(self.loginSem, DISPATCH_TIME_FOREVER);
-        NSLog(@"通过重登录信号");
-        if (!self.isLogin) {
-            if (block) block(nil, @"自动登录失败, 请重新登录");    // 收到自动登录失败的，应该弹框重登录
-            return ;
-        } else {
-            NSLog(@"自动登录成功");
-        }
-    }
+
 
     // 包头是 32 位的整型，表示包体长度
     
@@ -158,6 +136,43 @@ static TCPClient *instance = nil;
         }
         [_callbackBlock removeObjectForKey:key];
         [_dictionaryLock unlock];
+    }
+}
+
+- (void)autoLogin:(TOMMessageModel *)rootMsg callback:(TCPBlock)block
+{
+    if (self.socketStatus == TcpSocketStatusConectioned && self.autoLogin && rootMsg && rootMsg.type != TOMMessageTypeLogin) {
+        NSLog(@"------开始进入自动登录-----");
+        self.loginSem = dispatch_semaphore_create(0);
+        
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSString *name = [ud objectForKey:@"UserName"];
+        NSString *psw = [ud objectForKey:@"Password"];
+        if (name && psw) {
+            self.socketStatus = TcpSocketStatusLogining;
+            [self createLoginAndSend:name password:psw completion:^(id response, NSString *error) {
+                if (error) {
+                    self.socketStatus = TcpSocketStatusLoginFail;
+                    self.autoLogin = NO;
+                    NSLog(@"自动登录失败");
+                }else{
+                    self.socketStatus = TcpSocketStatusLoginSuccess;
+                    self.autoLogin = YES;
+                    NSLog(@"自动登录成功");
+                }
+                // 重登录不解析 response，都是一样的
+                dispatch_semaphore_signal(self.loginSem);
+            }];
+        } else {
+            self.socketStatus = TcpSocketStatusLoginFail;
+            self.autoLogin = NO;
+            dispatch_semaphore_signal(self.loginSem);
+        }
+        dispatch_semaphore_wait(self.loginSem, DISPATCH_TIME_FOREVER);
+        if (self.socketStatus != TcpSocketStatusLoginSuccess) {
+            if (block) block(nil, @"自动登录失败, 请重新登录");
+            return;
+        }
     }
 }
 
@@ -229,32 +244,33 @@ static TCPClient *instance = nil;
     }
 }
 
-// 网络状态变化
-- (void)netWorkStatusChanged:(NSNotification *)nofiy {
-    dispatch_async(self.APIQueue, ^{
-        NSDictionary *info = nofiy.userInfo;
-        if (info && info[@"status"]) {
-            NSNumber *status = info[@"status"];
-            self.netWorkStatus = [status boolValue];
-            if (self.netWorkStatus) {
-                [self tryOpenPingTimer];
-            } else {
-                [self closeTimer];
-                // 网络断开，清空发送回调队列，登录状态为 false
-                self.isLogin = NO;
-                [self cleanSendQueue];
-            }
-        }
-    });
-}
-
+//// 网络状态变化
+//- (void)netWorkStatusChanged:(NSNotification *)nofiy {
+//    dispatch_async(self.APIQueue, ^{
+//        NSDictionary *info = nofiy.userInfo;
+//        if (info && info[@"status"]) {
+//            NSNumber *status = info[@"status"];
+//            self.netWorkStatus = [status boolValue];
+//            if (self.netWorkStatus) {
+//                [self tryOpenPingTimer];
+//            } else {
+//                [self closeTimer];
+//                // 网络断开，清空发送回调队列，登录状态为 false
+//                self.isLogin = NO;
+//                [self cleanSendQueue];
+//            }
+//        }
+//    });
+//}
+//
 // socket 状态变化
 - (void)socket:(GCDAsyncSocket *)socket didConnect:(NSString *)host port:(uint16_t)port {
     [self tryOpenPingTimer];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)socket {
-    self.isLogin = NO;
+    NSLog(@"TCPClient  连接关闭 socketDidDisconnect");
+    self.socketStatus = TcpSocketStatusDisConectioned;
     [self closeTimer];
     [self.buffer setLength:0];
 }
@@ -262,11 +278,10 @@ static TCPClient *instance = nil;
 // 清空发送队列
 - (void)cleanSendQueue {
     [_dictionaryLock lock];
-    NSLog(@"清空发送队列");
     for (NSString *key in self.callbackBlock) {
         TCPBlock complete = [self.callbackBlock objectForKey:key];
         if (complete != nil) {
-            complete(nil, @"null");
+            complete(nil, @"No Call Back");
         }
     }
     [self.callbackBlock removeAllObjects];
@@ -292,7 +307,7 @@ static TCPClient *instance = nil;
         [self closeTimer];
         // timer 要在主线程中开启才有效
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.heartTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(sendHeart) userInfo:nil repeats:true];
+            self.heartTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(sendHeart) userInfo:nil repeats:true];
         });
     }
 }
@@ -306,10 +321,9 @@ static TCPClient *instance = nil;
 
 - (void)sendHeart
 {
-    UInt32 tag = self.seq;
     TOMMessageModel *pingModel = [[TOMMessageModel alloc] initWithType:TOMMessageTypePing andMessageDic:nil];
-    pingModel.tag = tag;
-    [self send:pingModel seq:tag callback:nil];
+    pingModel.tag = 0;
+    [self send:pingModel seq:0 callback:nil];
 }
 
 #pragma - mark 以下是请求 api
@@ -317,10 +331,10 @@ static TCPClient *instance = nil;
 - (void)requestLogin:(NSString *)name password:(NSString *)psw completion:(TCPBlock)block {
     dispatch_async(self.APIQueue, ^{
         self.autoLogin = true;      // 主动登录，设置自动登录
-        // 如果登录了，先下线
-        if ([[SocketClientManager instance] status] && self.isLogin) {
-            [[SocketClientManager instance] disConnect];
-        }
+//        // 如果登录了，先下线
+//        if ([[SocketClientManager instance] status] && self.socketStatus == ) {
+//            [[SocketClientManager instance] disConnect];
+//        }
         // 保存用户名密码到文件，应该加密保存
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         [ud setObject:name forKey:@"UserName"];
@@ -343,7 +357,7 @@ static TCPClient *instance = nil;
 - (void)receiveLogin:(TOMMessageModel *)root completion:(TCPBlock)block {
     
     if (root.dataDic[@"loginStatus"]) {
-        self.isLogin = YES;
+        self.socketStatus = TcpSocketStatusLoginSuccess;
         self.autoLogin = YES;
         [self startHeartBeat];
         NSLog(@"---------Login Success-------------");
@@ -351,7 +365,7 @@ static TCPClient *instance = nil;
         if (block) block(nil, @"登录成功");
     } else {
         NSLog(@"---------Login Error-------------");
-        self.isLogin = NO;
+        self.socketStatus = TcpSocketStatusLoginFail;
         self.autoLogin = NO;
         if (block) block(nil, @"登录失败");
     }
@@ -380,7 +394,7 @@ static TCPClient *instance = nil;
 - (void)receiveKick {
     [[SocketClientManager instance] disConnect];
     [self closeHeartBeat];
-    self.isLogin = NO;
+    self.socketStatus = TcpSocketStatusDisConectioned;
     self.autoLogin = NO;
 }
 
