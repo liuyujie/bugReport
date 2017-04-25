@@ -27,6 +27,9 @@
 		2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EA1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m */; };
 		2746A3F01E9D115400115875 /* NSObject+DBDebugToolkit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */; };
 		2748849D1EAE314000863CF1 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */; };
+		27B63AAB1EAF84220054356A /* SocketClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B63AA61EAF84220054356A /* SocketClientManager.m */; };
+		27B63AAC1EAF84220054356A /* TCPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B63AA81EAF84220054356A /* TCPClient.m */; };
+		27B63AAD1EAF84220054356A /* TOMMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B63AAA1EAF84220054356A /* TOMMessageModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,12 @@
 		2746A3EF1E9D115400115875 /* NSObject+DBDebugToolkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DBDebugToolkit.m"; sourceTree = "<group>"; };
 		2748849B1EAE314000863CF1 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		27B63AA51EAF84220054356A /* SocketClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketClientManager.h; sourceTree = "<group>"; };
+		27B63AA61EAF84220054356A /* SocketClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketClientManager.m; sourceTree = "<group>"; };
+		27B63AA71EAF84220054356A /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
+		27B63AA81EAF84220054356A /* TCPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPClient.m; sourceTree = "<group>"; };
+		27B63AA91EAF84220054356A /* TOMMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOMMessageModel.h; sourceTree = "<group>"; };
+		27B63AAA1EAF84220054356A /* TOMMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TOMMessageModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +235,12 @@
 			children = (
 				2748849B1EAE314000863CF1 /* GCDAsyncSocket.h */,
 				2748849C1EAE314000863CF1 /* GCDAsyncSocket.m */,
+				27B63AA51EAF84220054356A /* SocketClientManager.h */,
+				27B63AA61EAF84220054356A /* SocketClientManager.m */,
+				27B63AA71EAF84220054356A /* TCPClient.h */,
+				27B63AA81EAF84220054356A /* TCPClient.m */,
+				27B63AA91EAF84220054356A /* TOMMessageModel.h */,
+				27B63AAA1EAF84220054356A /* TOMMessageModel.m */,
 			);
 			path = GCDAsyncSocket;
 			sourceTree = "<group>";
@@ -370,12 +385,15 @@
 				2746A3DC1E9BCBEF00115875 /* TomEditImageViewController.m in Sources */,
 				2746A3F01E9D115400115875 /* NSObject+DBDebugToolkit.m in Sources */,
 				2746A3E31E9BE21700115875 /* TomUncaughtExceptionHandler.m in Sources */,
+				27B63AAB1EAF84220054356A /* SocketClientManager.m in Sources */,
+				27B63AAD1EAF84220054356A /* TOMMessageModel.m in Sources */,
 				271E17171E70616300299116 /* ViewController.m in Sources */,
 				271E17491E70619D00299116 /* TomBugReportManager.m in Sources */,
 				271E17141E70616300299116 /* AppDelegate.m in Sources */,
 				271E17111E70616300299116 /* main.m in Sources */,
 				2746A3E21E9BE21700115875 /* TomCrashSignalHandler.m in Sources */,
 				2746A3EB1E9D111B00115875 /* DBRequestOutcome.m in Sources */,
+				27B63AAC1EAF84220054356A /* TCPClient.m in Sources */,
 				2746A3ED1E9D111B00115875 /* NSURLSessionConfiguration+DBURLProtocol.m in Sources */,
 				2748849D1EAE314000863CF1 /* GCDAsyncSocket.m in Sources */,
 				271E174B1E70619D00299116 /* TomReportRootViewController.m in Sources */,

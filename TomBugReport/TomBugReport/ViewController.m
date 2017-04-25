@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "TCPClient.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    [[TCPClient instance] requestLogin:@"" password:@"" completion:^(id response, NSString *error) {
+        
+    }];
 }
 
 
@@ -27,7 +32,13 @@
 
 - (IBAction)onTestBtnClicked:(UIButton *)sender
 {
-    [self sendRequest:@"https://api.fir.im/apps?api_token=123"];
+//    [self sendRequest:@"https://api.fir.im/apps?api_token=123"];
+    
+    TOMMessageModel *model = [[TOMMessageModel alloc] initWithType:TOMMessageTypeRunJS andMessageDic:@{@"run":@"tom.js"}];
+    [[TCPClient instance] sendTomMessage:model completion:^(id response, NSString *error) {
+        
+    }];
+//
 }
 
 - (void)sendRequest:(NSString *)url
