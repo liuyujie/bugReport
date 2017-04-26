@@ -89,42 +89,39 @@ static TCPClient *instance = nil;
     return _seq;
 }
 
+
+- (void)sendTomMessage:(TOMMessageModel *)messageModel completion:(TCPBlock)block
+{
+    dispatch_async(self.APIQueue, ^{
+        UInt32 tag = self.seq;
+        messageModel.tag = tag;
+        [self send:messageModel seq:tag callback:block];
+    });
+}
+
 // ----------- tcp 打包，并发送, callback 回调 block ------------
 - (void)send:(TOMMessageModel *)rootMsg seq:(UInt32)s callback:(TCPBlock)block {
     // 无网络直接返回
-    if (self.netWorkStatus == false) {
+    if (!self.netWorkStatus) {
         if (block) block(nil, @"无网络");
         return ;
     }
-//    if (self.loginStatus == false && self.autoLogin == false) {
-//        if (block) block(nil, @"被踢不能自动登录");
-//        return ;
-//    }
-    
-    // 如果不是登录包，不是心跳包, 并且没登录，可以自动登录，先自动登录，登录失败返回错误
-
-
     // 包头是 32 位的整型，表示包体长度
-    
     NSData *messageData = [rootMsg getSendData];
     SInt32 length = (SInt32)[messageData length];
     NSMutableData *data = [NSMutableData dataWithBytes:&length length:4];
-    [data appendData:messageData];      // 追加包体
+    [data appendData:messageData];
 
     if (block != nil) {
-        // 保存回调 block 到字典里，接收时候用到
         NSString *key = [NSString stringWithFormat:@"%u", s];
         [_dictionaryLock lock];
         [_callbackBlock setObject:block forKey:key];
         [_dictionaryLock unlock];
-        
-        // 30 秒超时, 找到 key 删除
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 30 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self timerRemove:key];
         });
     }
-    NSLog(@"通知 socket 发送数据");
-    [[SocketClientManager instance] send:data];   // 发送
+    [[SocketClientManager instance] send:data];
 }
 
 - (void)timerRemove:(NSString *)key {
@@ -172,41 +169,6 @@ static TCPClient *instance = nil;
         if (self.socketStatus != TcpSocketStatusLoginSuccess) {
             if (block) block(nil, @"自动登录失败, 请重新登录");
             return;
-        }
-    }
-}
-
-// ----------- tcp 拆包 ------------
-// 上层调用者，同步队列回调该函数，所以不用加锁
-- (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data {
-    [_buffer appendData:data];
-    
-    while (_buffer.length >= 4) {
-        SInt32 length = 0;
-        [_buffer getBytes:&length length:4];    // 读取长度
-        
-        if (length == 0) {
-            if (_buffer.length >= 4) {          // 长度够不够心跳包
-                NSData *tmp = [_buffer subdataWithRange:NSMakeRange(4, _buffer.length - 4)];
-                [_buffer setLength:0];      // 清零
-                [_buffer appendData:tmp];
-            } else {
-                [_buffer setLength:0];
-            }
-            [self receive:nil];    // 分发数据包
-        } else {
-            NSUInteger packageLength = 4 + length;
-            if (packageLength <= _buffer.length) {     // 长度判断
-                NSData *rootData = [_buffer subdataWithRange:NSMakeRange(4, length)];
-                TOMMessageModel *root = [[TOMMessageModel alloc] initWithSocketData:rootData];
-                // 截取
-                NSData *tmp = [_buffer subdataWithRange:NSMakeRange(packageLength, _buffer.length - packageLength)];
-                [_buffer setLength:0];      // 清零
-                [_buffer appendData:tmp];
-                [self receive:root];    // 分发包
-            } else {
-                break;
-            }
         }
     }
 }
@@ -263,9 +225,45 @@ static TCPClient *instance = nil;
 //    });
 //}
 //
-// socket 状态变化
+
+#pragma mark - SocketClientManagerDelegate
+
 - (void)socket:(GCDAsyncSocket *)socket didConnect:(NSString *)host port:(uint16_t)port {
     [self tryOpenPingTimer];
+}
+// ----------- tcp 拆包 ------------
+// 上层调用者，同步队列回调该函数，所以不用加锁
+- (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data {
+    [_buffer appendData:data];
+    
+    while (_buffer.length >= 4) {
+        SInt32 length = 0;
+        [_buffer getBytes:&length length:4];    // 读取长度
+        
+        if (length == 0) {
+            if (_buffer.length >= 4) {          // 长度够不够心跳包
+                NSData *tmp = [_buffer subdataWithRange:NSMakeRange(4, _buffer.length - 4)];
+                [_buffer setLength:0];      // 清零
+                [_buffer appendData:tmp];
+            } else {
+                [_buffer setLength:0];
+            }
+            [self receive:nil];    // 分发数据包
+        } else {
+            NSUInteger packageLength = 4 + length;
+            if (packageLength <= _buffer.length) {     // 长度判断
+                NSData *rootData = [_buffer subdataWithRange:NSMakeRange(4, length)];
+                TOMMessageModel *root = [[TOMMessageModel alloc] initWithSocketData:rootData];
+                // 截取
+                NSData *tmp = [_buffer subdataWithRange:NSMakeRange(packageLength, _buffer.length - packageLength)];
+                [_buffer setLength:0];      // 清零
+                [_buffer appendData:tmp];
+                [self receive:root];    // 分发包
+            } else {
+                break;
+            }
+        }
+    }
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)socket {
@@ -288,6 +286,7 @@ static TCPClient *instance = nil;
     [_dictionaryLock unlock];
 }
 
+#pragma mark - Ping Heart
 // 开启心跳
 - (void)startHeartBeat {
     self.shouldHeart = true;
@@ -326,8 +325,8 @@ static TCPClient *instance = nil;
     [self send:pingModel seq:0 callback:nil];
 }
 
-#pragma - mark 以下是请求 api
-// 登录请求包
+#pragma mark - Send Login
+
 - (void)requestLogin:(NSString *)name password:(NSString *)psw completion:(TCPBlock)block {
     dispatch_async(self.APIQueue, ^{
         self.autoLogin = true;      // 主动登录，设置自动登录
@@ -344,7 +343,6 @@ static TCPClient *instance = nil;
     });
 }
 
-// 创建并发送登录包
 - (void)createLoginAndSend:(NSString *)name password:(NSString *)psw completion:(TCPBlock)block{
     
     UInt32 tag = self.seq;
@@ -353,7 +351,16 @@ static TCPClient *instance = nil;
     [self send:model seq:tag callback:block];
 }
 
-// 登录返回包
+
+#pragma mark - handel receive Data
+
+- (void)receiveKick {
+    [[SocketClientManager instance] disConnect];
+    [self closeHeartBeat];
+    self.socketStatus = TcpSocketStatusDisConectioned;
+    self.autoLogin = NO;
+}
+
 - (void)receiveLogin:(TOMMessageModel *)root completion:(TCPBlock)block {
     
     if (root.dataDic[@"loginStatus"]) {
@@ -371,7 +378,6 @@ static TCPClient *instance = nil;
     }
 }
 
-// 登录返回包
 - (void)receiveRunJS:(TOMMessageModel *)root completion:(TCPBlock)block {
     
     if (root.dataDic[@"Run"]) {
@@ -379,23 +385,6 @@ static TCPClient *instance = nil;
     } else {
         if (block) block(nil, @"");
     }
-}
-
-- (void)sendTomMessage:(TOMMessageModel *)messageModel completion:(TCPBlock)block
-{
-    dispatch_async(self.APIQueue, ^{
-        UInt32 tag = self.seq;
-        messageModel.tag = tag;
-        [self send:messageModel seq:tag callback:block];
-    });
-}
-
-// 收到踢人包
-- (void)receiveKick {
-    [[SocketClientManager instance] disConnect];
-    [self closeHeartBeat];
-    self.socketStatus = TcpSocketStatusDisConectioned;
-    self.autoLogin = NO;
 }
 
 @end
