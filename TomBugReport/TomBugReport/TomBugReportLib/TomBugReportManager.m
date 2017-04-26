@@ -11,6 +11,8 @@
 
 #import "TomCrashSignalHandler.h"
 #import "TomUncaughtExceptionHandler.h"
+#import "JPEngine.h"
+#import "TCPClient.h"
 
 @interface TomBugReportManager()
 {
@@ -25,7 +27,7 @@
 
 + (TomBugReportManager *)sharedInstance
 {
-    static dispatch_once_t onceToken;
+    static dispatch_once_t onceToken = 0;
     static TomBugReportManager *bugManager = nil;
     dispatch_once(&onceToken,^{
         bugManager = [[TomBugReportManager alloc] init];
@@ -45,6 +47,14 @@
         [self initReportWindow];
         TomInstallSignalHandler();
         TomInstallUncaughtExceptionHandler();
+        
+        [TCPClient instance];
+        [JPEngine startEngine];
+        
+        NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"];
+        NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+        [JPEngine evaluateScript:script];
+        
     }
     return self;
 }
