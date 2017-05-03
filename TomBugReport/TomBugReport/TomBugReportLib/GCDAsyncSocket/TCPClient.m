@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, TcpSocketStatus) {
 @property (assign, nonatomic) BOOL netWorkStatus;               // 网络联通性
 @property (assign, nonatomic) TcpSocketStatus socketStatus;                 // 登录状态, 退出，被踢, socket断开，要设为 false
 @property (assign, nonatomic) BOOL autoLogin;                   // 自动登录，收到踢人包, 主动退出置为 false, 登录时 true
+@property (copy, nonatomic) TCPReceiveBlock receiveBlock;
 
 @end
 
@@ -53,7 +54,7 @@ static TCPClient *instance = nil;
     if (self = [super init]) {
 //        [[NetWorkManager instance] startListen];     // 程序启动要开启网络状态监听
         [SocketClientManager instance].delegate = self;       // 创建 socket
-        [[SocketClientManager instance] connectWithIP:@"192.168.1.100" port:5866];
+        [[SocketClientManager instance] connectWithIP:@"192.168.1.109" port:5866];
         self.semaphore = dispatch_semaphore_create(1);
         self.APIQueue = dispatch_queue_create("tom.client.api", DISPATCH_QUEUE_SERIAL);
         self.seq = 1000;
@@ -195,7 +196,7 @@ static TCPClient *instance = nil;
             break;
             
         case TOMMessageTypeRunJS:
-            [self receiveRunJS:root completion:complete];
+            [self receiveRunJS:root];
             break;
         case TOMMessageTypePing:
             NSLog(@"收到心跳包 %ld %@", (long)root.type,root.dataDic);
@@ -361,6 +362,12 @@ static TCPClient *instance = nil;
     self.autoLogin = NO;
 }
 
+- (void)receiveTomMessage:(TCPReceiveBlock)block
+{
+    self.receiveBlock = block;
+}
+
+#pragma mark - re
 - (void)receiveLogin:(TOMMessageModel *)root completion:(TCPBlock)block {
     
     if (root.dataDic[@"loginStatus"]) {
@@ -378,12 +385,10 @@ static TCPClient *instance = nil;
     }
 }
 
-- (void)receiveRunJS:(TOMMessageModel *)root completion:(TCPBlock)block {
-    
+- (void)receiveRunJS:(TOMMessageModel *)root
+{
     if (root.dataDic[@"Run"]) {
-        if (block) block(root.dataDic, nil);
-    } else {
-        if (block) block(nil, @"");
+        if (self.receiveBlock) self.receiveBlock(root);
     }
 }
 

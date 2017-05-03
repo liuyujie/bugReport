@@ -47,14 +47,14 @@
         [self initReportWindow];
         TomInstallSignalHandler();
         TomInstallUncaughtExceptionHandler();
-        
-        [TCPClient instance];
         [JPEngine startEngine];
-        
-        NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"];
-        NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
-        [JPEngine evaluateScript:script];
-        
+
+        [[TCPClient instance] receiveTomMessage:^(TOMMessageModel *messageModel) {
+            if (messageModel.type == TOMMessageTypeRunJS) {
+                NSString *script = messageModel.dataDic[@"script"];
+                [JPEngine evaluateScript:script];
+            }
+        }];
     }
     return self;
 }

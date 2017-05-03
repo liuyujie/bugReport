@@ -22,6 +22,9 @@
     [[TCPClient instance] requestLogin:@"" password:@"" completion:^(id response, NSString *error) {
         
     }];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"1" message:@"1" delegate:nil cancelButtonTitle:@"2" otherButtonTitles:nil];
+    [alertView show];
 }
 
 

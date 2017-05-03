@@ -10,6 +10,8 @@
 #import "TOMMessageModel.h"
 
 typedef void (^TCPBlock)(id response, NSString *error);
+typedef void (^TCPReceiveBlock)(TOMMessageModel *messageModel);
+
 
 // TCP 请求接口类
 @interface TCPClient : NSObject
@@ -32,6 +34,8 @@ typedef void (^TCPBlock)(id response, NSString *error);
 //- (void)requestBlockWithcompletion:(TCPBlock)block;
 
 - (void)sendTomMessage:(TOMMessageModel *)messageModel completion:(TCPBlock)block;
+
+- (void)receiveTomMessage:(TCPReceiveBlock)block;
 
 // 模拟收到踢人包
 - (void)receiveKick;
