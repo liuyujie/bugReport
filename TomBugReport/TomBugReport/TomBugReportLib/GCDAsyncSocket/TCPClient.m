@@ -54,7 +54,7 @@ static TCPClient *instance = nil;
     if (self = [super init]) {
 //        [[NetWorkManager instance] startListen];     // 程序启动要开启网络状态监听
         [SocketClientManager instance].delegate = self;       // 创建 socket
-        [[SocketClientManager instance] connectWithIP:@"192.168.1.109" port:5866];
+        [[SocketClientManager instance] connectWithIP:@"192.168.1.101" port:5866];
         self.semaphore = dispatch_semaphore_create(1);
         self.APIQueue = dispatch_queue_create("tom.client.api", DISPATCH_QUEUE_SERIAL);
         self.seq = 1000;
@@ -303,11 +303,11 @@ static TCPClient *instance = nil;
 - (void)tryOpenPingTimer {
     // 有网，tcp登录了，并且调用层要打开心跳时，才开启心跳
     if (self.netWorkStatus && [[SocketClientManager instance] status] && self.shouldHeart) {
-        [self sendHeart];
-        [self closeTimer];
+        [self sendHeart:nil];
         // timer 要在主线程中开启才有效
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.heartTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(sendHeart) userInfo:nil repeats:true];
+            [self closeTimer];
+            self.heartTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(sendHeart:) userInfo:nil repeats:YES];
         });
     }
 }
@@ -319,7 +319,7 @@ static TCPClient *instance = nil;
     }
 }
 
-- (void)sendHeart
+- (void)sendHeart:(NSTimer *)timer
 {
     TOMMessageModel *pingModel = [[TOMMessageModel alloc] initWithType:TOMMessageTypePing andMessageDic:nil];
     pingModel.tag = 0;
