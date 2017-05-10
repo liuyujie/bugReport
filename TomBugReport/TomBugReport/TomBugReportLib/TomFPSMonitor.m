@@ -7,7 +7,7 @@
 //
 
 #import "TomFPSMonitor.h"
-#import <UIKit/UIKit.h>
+#import "TomDeviceInfoUtil.h"
 
 @interface TomFPSMonitor ()
 {
@@ -68,6 +68,8 @@
     if (currentFPS <= 40 && currentFPS > 0){
         [self reportFPSLow];
     }
+    NSLog(@"%@\n%@\n%@",[TomDeviceInfoUtil getIPAddress],[TomDeviceInfoUtil getAppCPUUsage],[TomDeviceInfoUtil getAppMemoryUsage]);
+
 }
 
 - (void)startFPSMonitor {

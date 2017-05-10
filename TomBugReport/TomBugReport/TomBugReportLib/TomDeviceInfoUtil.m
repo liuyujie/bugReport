@@ -7,9 +7,10 @@
 //
 
 #import "TomDeviceInfoUtil.h"
-#import "sys/utsname.h"
-#import <UIKit/UIKit.h>
-#include <mach-o/dyld.h>
+
+#import <sys/utsname.h>
+
+#import <mach-o/dyld.h>
 #import <mach/mach.h>
 #import <mach/task_info.h>
 #import <mach/task.h>
@@ -17,8 +18,10 @@
 #import <mach/mach_init.h>
 #import <mach/thread_act.h>
 #import <mach/thread_info.h>
-#include <ifaddrs.h>
-#include <arpa/inet.h>
+
+#import <ifaddrs.h>
+#import <arpa/inet.h>
+
 @implementation TomDeviceInfoUtil
 
 + (NSString *)getDeviceName
