@@ -7,11 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface TomDeviceInfoUtil : NSObject
 
 + (NSString *)getDeviceName;
 
 + (NSString *)getSystemNameAndVersion;
+
++ (NSString *)getAppPath;
+
++ (NSString *)getAppMemoryUsage;
+
++ (NSString *)getAppCPUUsage;
+
++ (NSString *)getIPAddress;
+
++ (UIImage *)snapsHotView:(UIView *)view;
 
 @end

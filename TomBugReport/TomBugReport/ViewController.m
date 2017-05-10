@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TCPClient.h"
+#import "TomFPSMonitor.h"
 
 @interface ViewController ()
 
@@ -25,6 +26,8 @@
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"1" message:@"1" delegate:nil cancelButtonTitle:@"2" otherButtonTitles:nil];
     [alertView show];
+    
+    [[TomFPSMonitor shareInstance] startFPSMonitor];
 }
 
 

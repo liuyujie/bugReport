@@ -13,7 +13,7 @@
 
 + (TomBugReportManager *)sharedInstance;
 
-+ (UIImage *)snapsHotView:(UIView *)view;
+- (NSString *)getTopViewControllerInfo:(UIWindow *)keyWindow;
 
 - (void)hiddenReportBugReportVC;
 
