@@ -45,3 +45,8 @@ iOS 涂鸦APP
 https://github.com/lll1024/JVDrawingBoard
 
 https://github.com/linsendear/LSDrawTest
+
+
+
+阻止App崩溃一次
+http://www.jianshu.com/p/fee0c5155b8e
