@@ -112,4 +112,5 @@
 {
     return _currentFPS;
 }
+
 @end

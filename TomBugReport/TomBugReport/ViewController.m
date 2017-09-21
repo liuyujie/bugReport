@@ -40,6 +40,12 @@
 {
 //    [self sendRequest:@"https://api.fir.im/apps?api_token=123"];
     
+    dispatch_semaphore_t t = dispatch_semaphore_create(1);
+    
+    dispatch_semaphore_wait(t, DISPATCH_TIME_FOREVER);
+    
+    
+    
     TOMMessageModel *model = [[TOMMessageModel alloc] initWithType:TOMMessageTypeRunJS andMessageDic:@{@"run":@"tom.js"}];
     [[TCPClient instance] sendTomMessage:model completion:^(id response, NSString *error) {
         
