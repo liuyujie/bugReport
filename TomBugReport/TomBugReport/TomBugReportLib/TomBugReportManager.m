@@ -8,7 +8,7 @@
 
 #import "TomBugReportManager.h"
 #import "TomReportRootViewController.h"
-
+#import "TomDeviceInfoUtil.h"
 #import "TomCrashSignalHandler.h"
 #import "TomUncaughtExceptionHandler.h"
 #import "JPEngine.h"
@@ -90,7 +90,7 @@
         UIWindow *keyWindow = [UIApplication sharedApplication].delegate.window;
         self.bugReportWindow.frame = mainScreenRect;
         self.bugReportWindow.windowLevel = UIWindowLevelNormal + 10.0;
-        UIImage *image = [TomBugReportManager snapsHotView:keyWindow];
+        UIImage *image = [TomDeviceInfoUtil snapsHotView:keyWindow];
         
         TomReportRootViewController *rootVC = [[TomReportRootViewController alloc] init];
         rootVC.image = image;
@@ -147,28 +147,5 @@
         }
     }
 }
-
-#pragma mark - 屏幕快照
-
-+ (UIImage *)snapsHotView:(UIView *)view
-{
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size,YES,[UIScreen mainScreen].scale);
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-+ (UIImage *)convertViewToImage:(UIView *)view
-{
-    //https://github.com/alskipp/ASScreenRecorder 录屏代码
-    // 第二个参数表示是否非透明。如果需要显示半透明效果，需传NO，否则YES。第三个参数就是屏幕密度了
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size,YES,[UIScreen mainScreen].scale);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
 
 @end

@@ -21,9 +21,6 @@ typedef void (^TCPReceiveBlock)(TOMMessageModel *messageModel);
 // 登录请求，网络恢复调用该接口实现自动登录，被踢，用户主动退出登录，不能自动登录
 - (void)requestLogin:(NSString *)name password:(NSString *)psw completion:(TCPBlock)block;
 
-// 发送单个心跳包
-- (void)sendHeart;
-
 // 开启心跳，登录时开启即可，其他情况自动开启或关闭
 - (void)startHeartBeat;
 

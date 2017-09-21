@@ -33,6 +33,7 @@ AsynSocket: https://github.com/hehe520/AsyncSocket.git
 
 iOS监控：https://github.com/dani-gavrilov/GDPerformanceView-Swift
 https://github.com/featuretower/GYMonitor
+https://github.com/JustKeepRunning/LXDAppMonitor
 
 BUG反馈：https://github.com/plausiblelabs/plcrashreporter
 

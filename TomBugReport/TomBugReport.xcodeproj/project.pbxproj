@@ -33,6 +33,7 @@
 		27B63AB41EB0E4110054356A /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B63AB21EB0E4110054356A /* JPEngine.m */; };
 		27B63AB51EB0E4110054356A /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 27B63AB31EB0E4110054356A /* JSPatch.js */; };
 		27B63AB71EB0E4890054356A /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = 27B63AB61EB0E4890054356A /* demo.js */; };
+		27FEE4631EC340B400A72A86 /* TomFPSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FEE4621EC340B400A72A86 /* TomFPSMonitor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		27B63AB21EB0E4110054356A /* JPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEngine.m; sourceTree = "<group>"; };
 		27B63AB31EB0E4110054356A /* JSPatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSPatch.js; sourceTree = "<group>"; };
 		27B63AB61EB0E4890054356A /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
+		27FEE4611EC340B400A72A86 /* TomFPSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomFPSMonitor.h; sourceTree = "<group>"; };
+		27FEE4621EC340B400A72A86 /* TomFPSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomFPSMonitor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,8 @@
 				271E174C1E7061E400299116 /* tom_btn_send_bug_n@2x.png */,
 				271E17431E70619D00299116 /* TomBugReportManager.h */,
 				271E17441E70619D00299116 /* TomBugReportManager.m */,
+				27FEE4611EC340B400A72A86 /* TomFPSMonitor.h */,
+				27FEE4621EC340B400A72A86 /* TomFPSMonitor.m */,
 				271E17451E70619D00299116 /* TomDeviceInfoUtil.h */,
 				271E17461E70619D00299116 /* TomDeviceInfoUtil.m */,
 				271E17471E70619D00299116 /* TomReportRootViewController.h */,
@@ -408,6 +413,7 @@
 				2746A3E31E9BE21700115875 /* TomUncaughtExceptionHandler.m in Sources */,
 				27B63AAB1EAF84220054356A /* SocketClientManager.m in Sources */,
 				27B63AAD1EAF84220054356A /* TOMMessageModel.m in Sources */,
+				27FEE4631EC340B400A72A86 /* TomFPSMonitor.m in Sources */,
 				271E17171E70616300299116 /* ViewController.m in Sources */,
 				271E17491E70619D00299116 /* TomBugReportManager.m in Sources */,
 				27B63AB41EB0E4110054356A /* JPEngine.m in Sources */,

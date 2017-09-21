@@ -55,7 +55,7 @@
 
 - (void)onReportBtnClicked:(UIButton *)sender
 {
-    UIImage *savedImage = [TomBugReportManager snapsHotView:self.view.window];
+    UIImage *savedImage = [TomDeviceInfoUtil snapsHotView:self.view.window];
     [self saveImageToPhotos:savedImage];
 }
 
