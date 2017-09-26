@@ -51,3 +51,5 @@ https://github.com/linsendear/LSDrawTest
 
 阻止App崩溃一次
 http://www.jianshu.com/p/fee0c5155b8e
+
+https://github.com/hongruqi/Walle/tree/master/Walle
