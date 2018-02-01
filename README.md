@@ -59,3 +59,5 @@ https://github.com/linsendear/LSDrawTest
 http://www.jianshu.com/p/fee0c5155b8e
 
 https://github.com/hongruqi/Walle/tree/master/Walle
+
+https://github.com/sunday1990/BayMaxProtector
