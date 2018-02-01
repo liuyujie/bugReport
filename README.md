@@ -17,6 +17,8 @@ https://github.com/dbukowski/DBDebugToolkit
 
 https://github.com/LeoMobileDeveloper/LHPerformanceStatusBar
 
+https://github.com/whf5566/UIDebuggingTool
+
 ###Method Swizzling方法交换打印路径
 
 主要监控的方法 aWeakFromXib,viewWillAp
@@ -32,7 +34,9 @@ ios 打印日志:https://github.com/shixueqian/iOS10LogDebugTool
 AsynSocket: https://github.com/hehe520/AsyncSocket.git
 
 iOS监控：https://github.com/dani-gavrilov/GDPerformanceView-Swift
+
 https://github.com/featuretower/GYMonitor
+
 https://github.com/JustKeepRunning/LXDAppMonitor
 
 BUG反馈：https://github.com/plausiblelabs/plcrashreporter
@@ -43,6 +47,7 @@ https://github.com/game3108/RunloopMonitorDemo
 
 
 iOS 涂鸦APP
+
 https://github.com/lll1024/JVDrawingBoard
 
 https://github.com/linsendear/LSDrawTest
@@ -50,6 +55,7 @@ https://github.com/linsendear/LSDrawTest
 
 
 阻止App崩溃一次
+
 http://www.jianshu.com/p/fee0c5155b8e
 
 https://github.com/hongruqi/Walle/tree/master/Walle
